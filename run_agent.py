@@ -1,6 +1,6 @@
 import argparse
 from env import Env, State, Robot
-from ref_agent import Agent 
+from agent import Agent
 
 import numpy as np
 import torch

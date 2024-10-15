@@ -5,13 +5,14 @@ import torch
 from torch.nn import CrossEntropyLoss
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
-CACHE_DIR = os.environ.get("HF_HOME", None)
+# CACHE_DIR = os.environ.get("HF_HOME", None)
 
 class Agent:
     def __init__(self,
                  model_name) -> None:
-        # TODO: load the model and tokenizer
-        pass 
+
+        model = AutoModelForCausalLM.from_pretrained("mistralai/Mistral-7B-v0.1", force_download=True)
+        tokenizer = AutoTokenizer.from_pretrained("mistralai/Mistral-7B-v0.1", force_download=True)
 
     def generate_response(self, prompt: str) -> str:
         # TODO: this function takes a prompt and return a response
