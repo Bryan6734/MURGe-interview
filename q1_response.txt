@@ -1,0 +1,15 @@
+Q1: What problems do you notice with this approach? If it is not working, why do you think it is not working? Write your response (3-4 sentences max) and save it in a file called `q1_response.txt`.
+
+The problem with this approach is that the model's action space is not grounded in the real world. This means that the model might attempt to take actions that it cannot "afford" to do; for example, if the model's goal is to drop the knife in the living room, it might drop a knife when it is not available in the inventory, or pick up a knife when it is not visible. 
+
+
+
+In the unconstrained example, it seems that the system prompt includes the set of all possible actions. 
+
+
+
+
+
+
+
+

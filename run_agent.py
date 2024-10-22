@@ -27,7 +27,9 @@ Put the knife in your inventory, then navigate to the living room and drop the k
                   current_state=start_state,
                   rationale_str=rationale_str)
 
+    
     print(robot.observe())  
+    
     # initialize the agent
     # the first time this runs it will take a while to download the model 
     # after that it should be fairly quick (5-10 seconds)
@@ -36,7 +38,10 @@ Put the knife in your inventory, then navigate to the living room and drop the k
     # if you want to develop more quickly, you can use GPT2 for debugging
     # but its performance will likely be poor 
     # agent = Agent(model_name="mistralai/Mistral-7B-v0.1")
-    agent = Agent(model_name="gpt2") 
+
+
+
+    agent = Agent(model_name="mistralai/Mistral-7B-v0.1-quantized")
 
 
     max_steps = 10
@@ -46,13 +51,13 @@ Put the knife in your inventory, then navigate to the living room and drop the k
         else:
             action = agent.generate_response(robot.observe())
 
-        print(f"ACTION: {action}")
+        print(f"[ACTION]: {action}")
         print()
         try:
             robot.execute_action(action)
         except ValueError as e:
             print(e)
-        print(robot.observe())
+        print(f"[PROMPT] {robot.observe()}")
 
         # check success 
         if 'knife' in env.env_lut['living room']: 

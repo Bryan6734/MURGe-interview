@@ -40,7 +40,7 @@ By default, generation should be done with the `mistralai/Mistral-7B-v0.1` LLM. 
 After implementing `generate_response()`, test it by running `python run_agent.py`. Copy your output and save it as `unconstrained_output.txt`. 
 The actions your model outputs should be strings, though not necessarily valid actions. 
 
-Q1: What problems do you notice with this approach? If it is not working, why do you think it is not working? Write your response (3-4 sentences max) and save it in a file called `q1_response.txt`.A
+Q1: What problems do you notice with this approach? If it is not working, why do you think it is not working? Write your response (3-4 sentences max) and save it in a file called `q1_response.txt`.
 
 ## Task 3: Constrained generation
 The environment has a function called `get_valid_actions()` that can be found in `env.py`. 

@@ -65,9 +65,9 @@ class Robot:
 
     def observe(self) -> str:
         prompt = f"""{self.system_prompt}
+
 {self.current_state.get_observation()}
-Valid actions: {', '.join(self.current_state.get_valid_actions())}
-{self.rationale_str}
+
 Action:"""
         return prompt
 

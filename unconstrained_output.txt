@@ -1,0 +1,120 @@
+(venv) bryansukidi@Bryans-MacBook-Air MURGe-interview % python run_agent.py
+You are an intelligent robot. Your goal is to drop a knife in the living room. Knife is in the kitchen. You can navigate the environment, pick up items, and drop them.
+You are in the living room. 
+You see: couch, television, book.
+You have the following items in your inventory: .
+Valid actions: pick up couch, pick up television, pick up book, go to bedroom, go to bathroom, go to kitchen
+Goal: Your goal is to drop a knife in the living room. 
+Put the knife in your inventory, then navigate to the living room and drop the knife.
+Action:
+[ACTION]: Drop the knife.
+
+Invalid action: Drop the knife.
+[PROMPT] You are an intelligent robot. Your goal is to drop a knife in the living room. Knife is in the kitchen. You can navigate the environment, pick up items, and drop them.
+You are in the living room. 
+You see: couch, television, book.
+You have the following items in your inventory: .
+Valid actions: pick up couch, pick up television, pick up book, go to bedroom, go to bathroom, go to kitchen
+Goal: Your goal is to drop a knife in the living room. 
+Put the knife in your inventory, then navigate to the living room and drop the knife.
+Action:
+[ACTION]: Drop the knife.
+
+Invalid action: Drop the knife.
+[PROMPT] You are an intelligent robot. Your goal is to drop a knife in the living room. Knife is in the kitchen. You can navigate the environment, pick up items, and drop them.
+You are in the living room. 
+You see: couch, television, book.
+You have the following items in your inventory: .
+Valid actions: pick up couch, pick up television, pick up book, go to bedroom, go to bathroom, go to kitchen
+Goal: Your goal is to drop a knife in the living room. 
+Put the knife in your inventory, then navigate to the living room and drop the knife.
+Action:
+[ACTION]: Drop the knife.
+
+Invalid action: Drop the knife.
+[PROMPT] You are an intelligent robot. Your goal is to drop a knife in the living room. Knife is in the kitchen. You can navigate the environment, pick up items, and drop them.
+You are in the living room. 
+You see: couch, television, book.
+You have the following items in your inventory: .
+Valid actions: pick up couch, pick up television, pick up book, go to bedroom, go to bathroom, go to kitchen
+Goal: Your goal is to drop a knife in the living room. 
+Put the knife in your inventory, then navigate to the living room and drop the knife.
+Action:
+[ACTION]: Drop the knife.
+
+Invalid action: Drop the knife.
+[PROMPT] You are an intelligent robot. Your goal is to drop a knife in the living room. Knife is in the kitchen. You can navigate the environment, pick up items, and drop them.
+You are in the living room. 
+You see: couch, television, book.
+You have the following items in your inventory: .
+Valid actions: pick up couch, pick up television, pick up book, go to bedroom, go to bathroom, go to kitchen
+Goal: Your goal is to drop a knife in the living room. 
+Put the knife in your inventory, then navigate to the living room and drop the knife.
+Action:
+[ACTION]: Drop the knife.
+
+Invalid action: Drop the knife.
+[PROMPT] You are an intelligent robot. Your goal is to drop a knife in the living room. Knife is in the kitchen. You can navigate the environment, pick up items, and drop them.
+You are in the living room. 
+You see: couch, television, book.
+You have the following items in your inventory: .
+Valid actions: pick up couch, pick up television, pick up book, go to bedroom, go to bathroom, go to kitchen
+Goal: Your goal is to drop a knife in the living room. 
+Put the knife in your inventory, then navigate to the living room and drop the knife.
+Action:
+[ACTION]: Drop the knife.
+
+Invalid action: Drop the knife.
+[PROMPT] You are an intelligent robot. Your goal is to drop a knife in the living room. Knife is in the kitchen. You can navigate the environment, pick up items, and drop them.
+You are in the living room. 
+You see: couch, television, book.
+You have the following items in your inventory: .
+Valid actions: pick up couch, pick up television, pick up book, go to bedroom, go to bathroom, go to kitchen
+Goal: Your goal is to drop a knife in the living room. 
+Put the knife in your inventory, then navigate to the living room and drop the knife.
+Action:
+[ACTION]: Drop the knife.
+
+Invalid action: Drop the knife.
+[PROMPT] You are an intelligent robot. Your goal is to drop a knife in the living room. Knife is in the kitchen. You can navigate the environment, pick up items, and drop them.
+You are in the living room. 
+You see: couch, television, book.
+You have the following items in your inventory: .
+Valid actions: pick up couch, pick up television, pick up book, go to bedroom, go to bathroom, go to kitchen
+Goal: Your goal is to drop a knife in the living room. 
+Put the knife in your inventory, then navigate to the living room and drop the knife.
+Action:
+[ACTION]: Drop the knife.
+
+Invalid action: Drop the knife.
+[PROMPT] You are an intelligent robot. Your goal is to drop a knife in the living room. Knife is in the kitchen. You can navigate the environment, pick up items, and drop them.
+You are in the living room. 
+You see: couch, television, book.
+You have the following items in your inventory: .
+Valid actions: pick up couch, pick up television, pick up book, go to bedroom, go to bathroom, go to kitchen
+Goal: Your goal is to drop a knife in the living room. 
+Put the knife in your inventory, then navigate to the living room and drop the knife.
+Action:
+[ACTION]: Drop the knife.
+
+Invalid action: Drop the knife.
+[PROMPT] You are an intelligent robot. Your goal is to drop a knife in the living room. Knife is in the kitchen. You can navigate the environment, pick up items, and drop them.
+You are in the living room. 
+You see: couch, television, book.
+You have the following items in your inventory: .
+Valid actions: pick up couch, pick up television, pick up book, go to bedroom, go to bathroom, go to kitchen
+Goal: Your goal is to drop a knife in the living room. 
+Put the knife in your inventory, then navigate to the living room and drop the knife.
+Action:
+[ACTION]: Drop the knife.
+
+Invalid action: Drop the knife.
+[PROMPT] You are an intelligent robot. Your goal is to drop a knife in the living room. Knife is in the kitchen. You can navigate the environment, pick up items, and drop them.
+You are in the living room. 
+You see: couch, television, book.
+You have the following items in your inventory: .
+Valid actions: pick up couch, pick up television, pick up book, go to bedroom, go to bathroom, go to kitchen
+Goal: Your goal is to drop a knife in the living room. 
+Put the knife in your inventory, then navigate to the living room and drop the knife.
+Action:
+(venv) bryansukidi@Bryans-MacBook-Air MURGe-interview % 
