@@ -35,8 +35,8 @@ Put the knife in your inventory, then navigate to the living room and drop the k
     # if you have a GPU, it will be faster
     # if you want to develop more quickly, you can use GPT2 for debugging
     # but its performance will likely be poor 
-    agent = Agent(model_name="mistralai/Mistral-7B-v0.1")
-    # agent = Agent(model_name="gpt2") 
+    # agent = Agent(model_name="mistralai/Mistral-7B-v0.1")
+    agent = Agent(model_name="gpt2") 
 
 
     max_steps = 10
