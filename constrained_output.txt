@@ -1,0 +1,54 @@
+(venv) PS C:\Users\Bryan Sukidi\Projects\interview_package_murge_ambiguity_project> python run_agent.py --constrained
+The `load_in_4bit` and `load_in_8bit` arguments are deprecated and will be removed in the future versions. Please, pass a `BitsAndBytesConfig` object in `quantization_config` argument instead.
+Loading checkpoint shards: 100%|█| 2/2 [00:37<00:00, 1
+C:\Users\Bryan Sukidi\Projects\interview_package_murge_ambiguity_project\venv\lib\site-packages\bitsandbytes\nn\modules.py:452: UserWarning: Input type into Linear4bit is torch.float16, but bnb_4bit_compute_dtype=torch.float32 (default). This will lead to slow inference or training speed.
+  warnings.warn(
+[ACTION] pick up couch
+[RELEVANCE] 1.0
+[ACTION] pick up television
+[RELEVANCE] 1.0
+[ACTION] pick up book
+[RELEVANCE] 1.0
+[ACTION] go to bathroom
+[RELEVANCE] 0.0
+[ACTION] go to bedroom
+[RELEVANCE] 1.0
+[ACTION] go to kitchen
+[RELEVANCE] 10.0
+-------------
+[MAX SCORE] 10.0
+[MAX SCORE ACTION] go to kitchen
+--------
+[ACTION] pick up knife
+[RELEVANCE] 10.0
+[ACTION] pick up fork
+[RELEVANCE] 1.0
+[ACTION] pick up spoon
+[RELEVANCE] 1.0
+-------------
+[MAX SCORE] 10.0
+[MAX SCORE ACTION] pick up knife
+--------
+[ACTION] go to bathroom
+[RELEVANCE] 0.0
+[ACTION] go to bedroom
+[RELEVANCE] 0.0
+[ACTION] go to living room
+[RELEVANCE] 10.0
+-------------
+[MAX SCORE] 10.0
+[MAX SCORE ACTION] go to living room
+--------
+[ACTION] pick up couch
+[RELEVANCE] 0.0
+[ACTION] pick up television
+[RELEVANCE] 1.0
+[ACTION] pick up book
+[RELEVANCE] 1.0
+[ACTION] drop knife
+[RELEVANCE] 10.0
+-------------
+[MAX SCORE] 10.0
+[MAX SCORE ACTION] drop knife
+--------
+Congratulations! You have successfully placed the knife in the living room!

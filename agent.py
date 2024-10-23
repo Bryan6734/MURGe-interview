@@ -24,7 +24,10 @@ class Agent:
         self.tokenizer.pad_token = self.tokenizer.eos_token
         self.model.generation_config.pad_token_id = self.tokenizer.pad_token_id
 
+    """
+    Generate an unconstrained response given a prompt
 
+    """
     def generate_response(self, prompt: str) -> str:
         # Tokenize inputs
         inputs = self.tokenizer(prompt, return_tensors="pt").to(self.device)
@@ -48,53 +51,61 @@ class Agent:
 
         return generated_text
 
+    """
+    Generate a constrained response given a prompt and a list of valid actions
     
+    1. Score each action based on the chance that the action is relevant to the goal (scored between 0 and 10, because model struggled with generating probabilities)
+    2. Return the action with the highest score 
+    
+    """
     def generate_constrained_response(self, prompt: str, valid_actions: List[str]) -> str:
 
-        prompt = prompt.replace("Action:", "") # Remove "Action:" from prompt
+        prompt = prompt.replace("Action:", "")
+        relevance_scores = []
 
         for action in valid_actions:
-            # Task-grounding
-            relevant_prompt = prompt + f"Q: Given the action {action}, what is the probability from 0 to 1 that this action is relevant in the long-term to our goal? A: The probability is"
+            
+            # Construct prompt for relevance. Followed HuggingFace's prompting best practices on the website. 
+            relevant_prompt = "Context: " + prompt + f"Q: Given the action {action}, how relevant is this action to your goal on a scale of 0 to 1? A: Given our goal, I would give it a score of "
 
+            # Generate model response
             inputs = self.tokenizer(relevant_prompt, return_tensors="pt").to(self.device)
-            output = self.model.generate(**inputs, return_dict_in_generate=True, max_new_tokens=10)
+            output = self.model.generate(**inputs, return_dict_in_generate=True, max_new_tokens=3)
             output_token_ids = output.sequences[0]
 
+            # Obtain action relevance score
             decoded_output = self.tokenizer.decode(output_token_ids, skip_special_tokens=True)
+            relevance_score = decoded_output.split("A: ")[1].strip()
+            relevance_score = ''.join(filter(str.isdigit, relevance_score))
+            relevance_score = float(relevance_score)
 
-            print(decoded_output)
+            print("[ACTION] " + action)
+            print("[RELEVANCE] " + str(relevance_score))
 
-
-
+            relevance_scores.append(relevance_score)
         
+        # Return action with highest relevance score
+        max_score = max(relevance_scores)
+        max_score_index = relevance_scores.index(max_score)
+        print("-------------")
+        print("[MAX SCORE] " + str(max_score))
+        print("[MAX SCORE ACTION] " + valid_actions[max_score_index])
+        return valid_actions[max_score_index]
 
-        
+    def score_action(self, prompt: str, action: str) -> float:
+        # Construct prompt for relevance. Followed HuggingFace's prompting best practices on the website. 
+        relevant_prompt = "Context: " + prompt + f"Q: Given the action {action}, how relevant is this action to your goal on a scale of 0 to 1? A: Given our goal, I would give it a score of "
 
-        
+        # Generate model response
+        inputs = self.tokenizer(relevant_prompt, return_tensors="pt").to(self.device)
+        output = self.model.generate(**inputs, return_dict_in_generate=True, max_new_tokens=3)
+        output_token_ids = output.sequences[0]
 
-        # valid_action_scores = []
-        # modified_prompt = prompt.replace("Action:", "")
+        # Obtain action relevance score
+        decoded_output = self.tokenizer.decode(output_token_ids, skip_special_tokens=True)
+        relevance_score = decoded_output.split("A: ")[1].strip()
+        relevance_score = ''.join(filter(str.isdigit, relevance_score))
+        relevance_score = float(relevance_score)
 
-        # for action in valid_actions:
-        #     print("Looking at action: ", action)
-        #     # "Task-grounding", according to authors
-        #     relevance_prompt = modified_prompt + f"\nGiven the action {action}, what is the probability from 0 to 1 that this action is relevant in the long-term to our goal?"
-
-        #     # "World-grounding", according to authors
-        #     affordance_prompt = modified_prompt + f"\nGiven the action {action}, what is the probability that this action is feasible in the current environment?"
-
-        #     # Tokenize inputs
-        #     relevance_inputs = self.tokenizer(relevance_prompt, return_tensors="pt").to(self.device)
-        #     affordance_inputs = self.tokenizer(affordance_prompt, return_tensors="pt").to(self.device)
-
-        #     # Generate model output ids
-        #     relevance_output = self.model.generate(**relevance_inputs, return_dict_in_generate=True, max_new_tokens=10)
-        #     affordance_output = self.model.generate(**affordance_inputs, return_dict_in_generate=True, max_new_tokens=10)
-
-        #     # Decode output
-        #     relevance_decoded_output = self.tokenizer.decode(relevance_output.sequences[0], skip_special_tokens=True)
-        #     affordance_decoded_output = self.tokenizer.decode(affordance_output.sequences[0], skip_special_tokens=True)
-
-
+        return relevance_score
 
