@@ -1,5 +1,5 @@
 Q2: Why did constrained generation work?
 
-By providing the model with a well-defined action space and scoring each action, we were able to effectively ground the model's actions in what actions were feasible in the environment ("world-grounding") and what actions were relevant to the task ("task-grounding"). While my constrained generation approach scored each action using individual LLM prompts, you could likely achieve similar results with some CoT prompting.   
+By providing the model with a well-defined action space and scoring each action, we were able to effectively ground the model's actions in what actions were feasible in the environment ("world-grounding") and what actions were relevant to the task ("task-grounding").
 
 

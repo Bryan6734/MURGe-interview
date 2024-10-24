@@ -1,9 +1,8 @@
 import os 
 from typing import List 
 
-import torch
-from torch.nn import CrossEntropyLoss
 from transformers import AutoModelForCausalLM, AutoTokenizer
+import torch
 import warnings
 
 
@@ -17,7 +16,7 @@ class Agent:
 
         # Initialize model and tokenizer
         self.tokenizer = AutoTokenizer.from_pretrained(model_name)
-        self.model = AutoModelForCausalLM.from_pretrained(model_name, load_in_4bit=True, device_map="auto") # quantized model
+        self.model = AutoModelForCausalLM.from_pretrained(model_name, device_map="auto", load_in_4bit=True) # quantized model
 
         # Suppress warnings
         warnings.filterwarnings("ignore", category=FutureWarning, message="`resume_download` is deprecated and will be removed in version 1.0.0.")
@@ -51,45 +50,100 @@ class Agent:
 
     def generate_constrained_response(self, prompt: str, valid_actions: List[str]) -> str:
 
-        print("---------------------")
-        prompt = prompt + " "
-        print(prompt)
-
-        # Instruction, as used in the paper
-        scores = []
-  
+        print("\nPrompt: " + prompt)
+        
+        results = []
         for action in valid_actions:
-            # Probability that a skill is useful for instruction
             score = self.score_action(prompt, action)
-            print(f"{action} | {score}")
-            scores.append(score)
+            results.append((action, score))
 
-        arg_max = valid_actions[scores.index(max(scores))]
-        return arg_max
+        results.sort(key=lambda x: x[1], reverse=True)
+        print("\nRanked completion probabilities (log scale):")
+        for option, log_prob in results:
+            print(f'"{option}": {log_prob:.4f}')
+
+        print("\nSelected action: " + results[0][0])
+
+        return results[0][0]
+
+
 
     def score_action(self, prompt: str, action: str):
 
-        # Tokenize prompt + action, as well as action
-        input_tokens = self.tokenizer(prompt + action, return_tensors="pt")
-        action_tokens = self.tokenizer(action, return_tensors="pt")["input_ids"]
+        # tokenize the prompt and action together
+        prompt_action_str = f"{prompt} {action}"
+        prompt_action_tokens = self.tokenizer.encode(prompt_action_str, return_tensors="pt").to(self.device)
 
-        # Compute logits
+        # tokenize only the prompt (so that we can obtain the length and index log_probs)
+        # we also only want ids (not any attention masks), so encode is sufficient
+        prompt_tokens = self.tokenizer.encode(prompt, return_tensors="pt").to(self.device) 
+        prompt_length = prompt_tokens.shape[1]
+
+        # generate logits for probability distribution! (inference, so no grad needed)
         with torch.no_grad():
-            outputs = self.model(**input_tokens)
+            outputs = self.model(prompt_action_tokens)
             logits = outputs.logits
 
-        # Compute probability distribution
-        probs = torch.nn.functional.softmax(logits, dim=-1)
-        action_score = 1.0
-        
-        for idx, action_token_id in enumerate(action_tokens[0]):
-            action_token_position = input_tokens["input_ids"].shape[1] - action_tokens.shape[1] + idx
+        # logits[batch, token_index, vocab_size]
+        # for example, [0, 10, :] represents the probability distribution for the 11th token in the sequence 
+        logits = logits[:, prompt_length-1:, :]
+        log_probs = torch.log_softmax(logits, dim=-1) # apply softmax to logits
 
-            # look up the probability
-            action_probability = probs[0, action_token_position, action_token_id].item()
-            action_score *= action_probability
+        action_tokens = prompt_action_tokens[:, prompt_length:]
+        action_token_log_probs = log_probs[0, torch.arange(action_tokens.shape[1]), action_tokens[0]]
+        sequence_log_prob = action_token_log_probs.sum().item()
+        return sequence_log_prob
+                
+
+    # def generate_constrained_response(self, prompt: str, valid_actions: List[str]) -> str:
+
+    #     prompt = """You are an intelligent robot. Your goal is to drop a knife in the living room. Knife is in the kitchen. You can navigate the environment, pick up items, and drop them.
+
+    #     You are in the living room. 
+    #     You see: couch, television, book.
+    #     You have the following items in your inventory: .
+    #     Valid actions: pick up couch, pick up television, pick up book, go to kitchen, go to bathroom, go to bedroom
+
+    #     Action: """
+
+    #     # Instruction, as used in the paper
+    #     scores = []
+  
+    #     for action in valid_actions:
+    #         # Probability that a skill is useful for instruction
+    #         score = self.score_action(prompt, action)
+    #         print(f"{action} | {score}")
+    #         scores.append(score)
+
+    #     arg_max = valid_actions[scores.index(max(scores))]
+    #     return arg_max
+
+    # def score_action(self, prompt: str, action: str):
+
+    #     # Tokenize prompt + action, as well as action
+    #     input_tokens = self.tokenizer(prompt + action, return_tensors="pt")
+    #     action_tokens = self.tokenizer(action, return_tensors="pt", skip_special_tokens=True)["input_ids"]
+
+
+    #     # Compute logits
+    #     with torch.no_grad():
+    #         outputs = self.model(**input_tokens)
+    #         logits = outputs.logits
+
+    #     # Compute probability distribution
+    #     probs = torch.nn.functional.softmax(logits, dim=-1)
+    #     action_score = 1.0
+        
+    #     for idx, action_token_id in enumerate(action_tokens[0]):
+    #         action_token_position = input_tokens["input_ids"].shape[1] - action_tokens.shape[1] + idx
+
+    #         # look up the probability
+    #         action_probability = probs[0, action_token_position, action_token_id].item()
+    #         action_score *= action_probability
+        
+
             
-        return action_score
+    #     return action_score
 
 
 

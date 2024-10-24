@@ -19,11 +19,10 @@ def main(args):
                         inventory=[])
 
     # the rationale is needed to guide the model towards the right solution  
-    rationale_str = """Goal: Your goal is to drop a knife in the living room. 
-Put the knife in your inventory, then navigate to the living room and drop the knife."""
+    rationale_str = """Goal: Your goal is to drop a knife in the living room."""
     # instantiate robot object 
     robot = Robot(env=env,
-                  system_prompt="You are an intelligent robot. Your goal is to drop a knife in the living room. Knife is in the kitchen. You can navigate the environment, pick up items, and drop them.",
+                  system_prompt="You are an intelligent robot. Your goal is to drop a knife in the living room. The knife starts in the kitchen. You can navigate the environment, pick up items, and drop them.",
                   current_state=start_state,
                   rationale_str=rationale_str)
 

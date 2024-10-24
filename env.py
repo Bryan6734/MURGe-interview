@@ -68,9 +68,9 @@ class Robot:
 
 {self.current_state.get_observation()}
 Valid actions: {', '.join(self.current_state.get_valid_actions())}
-{self.rationale_str}
+{self.rationale_str if self.rationale_str else ""}
 
-Action:"""
+Action: """
         return prompt
 
     def execute_action(self, action: str) -> None:

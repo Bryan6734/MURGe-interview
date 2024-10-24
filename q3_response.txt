@@ -1,11 +1,6 @@
 Q3: Are there any major limitations to the constrained generation approach you have implemented?
 
-Yes, there are. If we want to generalize our approach, we need to consider the following:
-
-(1) Not all environments come with a well-defined affordance function. In real-world environments, we would likely have to implement separate models like in SayCan to break down the objective into several, low-level skills and determine their affordance score. 
+Yes, there are. The main one is that not all environments come with a well-defined affordance function (i.e. get_valid_actions). In real-world environments, we would likely have to implement separate models like in SayCan to break down the objective into several, low-level skills and determine their affordance score. 
 (2) Not all actions are equally probably to succeed. What happens if two actions are equally relevant and affordable (i.e. going to the train vs. the bus), but they are not equally likely to succeed (i.e. the bus is chronically late, but the train is always on time)? 
 (3) There are probably some optimizations that can be made with the prompting. 
 
-One interesting observation on prompting: 
-
-(1) It seems that LLMs sometimes struggle with generating scores across domains where the difference between the upper and lower bound is small (i.e 0-1, vs 0-100,000). When I prompted the model to generate a probability between 0-1 indicating relevance, it failed; however, when I asked it to generate a score between 1-10, it succeeded. I ran some additional tests (1-5, which semi-succeeded, 1-100, which suceeded), and found that when I prompted it to score between 0-5, it completed the task, but picked up a couch along the way. I wonder if this is because some smaller/quantized models have a harder time interpreting floating point values, or if it is easier for the model to score prompts when the bounds are extreme and far apart.
